@@ -1,0 +1,26 @@
+{
+  "manifest_version": 3,
+  "name": "DisconX",
+  "version": "0.0.1",
+  "description": "Unfollow people who don't follow back. Add them to a private list of your choice",
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "ext-logo.png",
+      "48": "ext-logo.png",
+      "128": "ext-logo.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://twitter.com/*/following"
+      ],
+      "js": ["content.js"]
+    }
+  ],
+  "permissions": [
+    "activeTab",
+    "storage"
+  ]
+}

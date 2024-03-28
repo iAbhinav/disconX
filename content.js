@@ -9,11 +9,13 @@ function parseUsers() {
         const userDiv = userDivs[i];
         if (userDiv) {
             const name = userDiv.querySelector('a[role=link] div[dir="ltr"] span span')?.innerHTML
+            const followsHTML = userDiv.querySelector('div[data-testid="userFollowIndicator"] span')?.innerHTML
             const userHandle = userDiv.querySelector('a[tabindex="-1"] span')?.innerHTML;
             if (!followers[userHandle]) {
                 followers[userHandle] = {
                     handle: userHandle,
-                    name: name
+                    name: name,
+                    followsBack: followsHTML == "Follows you"
                 }
             }
         }
@@ -43,10 +45,31 @@ const scrollToBottom = () => {
 
     if (previousHeight == document.documentElement.scrollHeight) {
         previousHeight = 0;
+        const data = {
+            total: 0,
+            followsBack: 0,
+            followBackUsers: [],
+            doesntFollowBack: 0,
+            doesntFollowBackUsers: []
+        }
         Object.keys(followers).forEach(key => {
-            console.log(followers[key]?.name, key)
+            const user = followers[key];
+            // console.log(user?.name, key, user?.followsBack)
+            data.total ++;
+            if(user?.followsBack) {
+                data.followsBack++;
+                data.followBackUsers[user?.handle] = user;
+            } else {
+                data.doesntFollowBack++;
+                data.doesntFollowBackUsers[user?.handle] = user;
+            }
         })
-        console.log("Total Following", Object.keys(followers)?.length)
+        // console.log("Total Following", Object.keys(followers)?.length)
+        console.log("🔥 Final Data 🔥")
+        console.log("Total Following: ", data.total)
+        console.log("Following Back: ", data.followsBack)
+        console.log("Not Following Back: ", data.doesntFollowBack)
+
     } else {
         // console.log("Go More")
         // window.scrollTo(previousHeight, document.documentElement.scrollHeight);

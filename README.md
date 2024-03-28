@@ -6,6 +6,9 @@ Chrome extension to Unfollow people who don't follow back and Add them to a priv
 
 ---
 
-## [MIT License](./License)
+## [License](./License)
+
+⚖️ MIT License
 
 Copyright (c) [Abhinav Singhal](https://twitter.com/umunBeing)/2024
+

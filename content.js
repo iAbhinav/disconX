@@ -1,6 +1,29 @@
 var previousHeight = 0;
 var followers = []
 
+function getDataFromFollowers(_followers) {
+    const data = {
+        total: 0,
+        followsBack: 0,
+        followBackUsers: [],
+        doesntFollowBack: 0,
+        doesntFollowBackUsers: []
+    }
+    Object.keys(_followers).forEach(key => {
+        const user = _followers[key];
+        // console.log(user?.name, key, user?.followsBack)
+        data.total ++;
+        if(user?.followsBack) {
+            data.followsBack++;
+            data.followBackUsers[user?.handle] = user;
+        } else {
+            data.doesntFollowBack++;
+            data.doesntFollowBackUsers[user?.handle] = user;
+        }
+    })
+    return data;
+}
+
 function parseUsers() {
     const userDivs = document.querySelectorAll('[aria-label="Timeline: Following"] div[tabindex="0"][role="button"]');
     // console.log("Users length", userDivs?.length)
@@ -22,6 +45,11 @@ function parseUsers() {
         // console.log(userDivs[i].querySelector('a[tabindex="-1"] span')?.innerHTML)
         // console.log("Follow Button", userDivs[i+1])
     }
+
+    // After processing all followers
+    chrome.runtime.sendMessage({ message: "followersUpdated", data: JSON.stringify(getDataFromFollowers(followers)) }, (response) => {
+        // ... (optional: handle response)
+    });
 }
 
 
@@ -45,31 +73,16 @@ const scrollToBottom = () => {
 
     if (previousHeight == document.documentElement.scrollHeight) {
         previousHeight = 0;
-        const data = {
-            total: 0,
-            followsBack: 0,
-            followBackUsers: [],
-            doesntFollowBack: 0,
-            doesntFollowBackUsers: []
-        }
-        Object.keys(followers).forEach(key => {
-            const user = followers[key];
-            // console.log(user?.name, key, user?.followsBack)
-            data.total ++;
-            if(user?.followsBack) {
-                data.followsBack++;
-                data.followBackUsers[user?.handle] = user;
-            } else {
-                data.doesntFollowBack++;
-                data.doesntFollowBackUsers[user?.handle] = user;
-            }
-        })
+        const data = getDataFromFollowers(followers);
         // console.log("Total Following", Object.keys(followers)?.length)
         console.log("🔥 Final Data 🔥")
         console.log("Total Following: ", data.total)
         console.log("Following Back: ", data.followsBack)
         console.log("Not Following Back: ", data.doesntFollowBack)
 
+        chrome.runtime.sendMessage({ message: "analysisComplete", data: JSON.stringify(data) }, (response) => {
+            // ... (optional: handle response)
+        });
     } else {
         // console.log("Go More")
         // window.scrollTo(previousHeight, document.documentElement.scrollHeight);

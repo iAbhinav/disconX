@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "DisconX",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Unfollow people who don't follow back. Add them to a private list of your choice",
   "action": {
     "default_popup": "popup.html",

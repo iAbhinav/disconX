@@ -4,6 +4,6 @@ function helloWorld(){
 
 helloWorld();
 
-// chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-//     console.log("Button clicked in popup!")
-// });
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+    console.log("Button clicked in popup!")
+});

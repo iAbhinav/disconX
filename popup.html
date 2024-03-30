@@ -1,26 +1,56 @@
 <!DOCTYPE html>
-<html>
-<head>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- favicon -->
+    <link rel="icon" type="image/x-icon" href="./ext-logo.png" />
+    <!-- style sheet -->
+    <link rel="stylesheet" href="./index.css" />
     <title>DisconX Popup</title>
-</head>
-<body>
-<h1>DisconX</h1>
-<button id="startAnalyzingBtn">Analyze Followings!</button>
+  </head>
+  <body>
+    <body>
+      <header class="header">
+        <div class="brand">
+          <div class="logo">
+            <img src="./ext-logo.png" alt="DisconX" />
+          </div>
+          <h1>DisconX</h1>
+        </div>
+        <!-- Button -->
+        <div class="btn-container">
+          <button id="startAnalyzingBtn" class="btn">
+            Analyze Followings!
+          </button>
+        </div>
+      </header>
 
-<div id="message">
-    Do not close the extension, or move away from the tab while we analyse all the accounts you are following.
-</div>
-<br>
-<br>
-<br>
-Total
-<div id="followingCount">0</div>
+      <!-- message -->
+      <div id="message">
+        <p>
+          Do not close the extension, or move away from the tab while we analyse
+          all the accounts you are following.
+        </p>
+      </div>
+      <main class="followers-details">
+        <div class="follower-count">
+          <p>Total</p>
+          <h3 id="followingCount">0</h3>
+        </div>
+        <div class="follower-count">
+          <p>Follows Back</p>
+          <h3 id="followsBackCount">0</h3>
+        </div>
+        <div class="follower-count">
+          <p>Doesn't FollowBack</p>
+          <h3 id="doesntFollowBackCount">0</h3>
+        </div>
+      </main>
 
-Follows Back
-<div id="followsBackCount">0</div>
-
-Doesn't FollowBack
-<div id="doesntFollowBackCount">0</div>
-<script src="popup.js"></script>
-</body>
+      <!-- JavaSrcipt -->
+      <script src="popup.js"></script>
+    </body>
+  </body>
 </html>
